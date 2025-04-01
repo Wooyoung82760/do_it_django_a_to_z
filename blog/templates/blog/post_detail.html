@@ -12,6 +12,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}" media="screen">
+    <script src="https://kit.fontawesome.com/613bf77fb5.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <!-- Responsive navbar-->
@@ -42,17 +43,39 @@
                     <!-- Post title-->
                     <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-2">Posted on {{ post.created_at }} by <a href="#">작성자명 쓸 위치(개발예정)</a></div>
+                    <div class="text-muted fst-italic mb-2">Posted on {{ post.created_at }} by <a href="#">작성자명 쓸
+                        위치(개발예정)</a></div>
                     <!-- Post categories-->
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
                 </header>
                 <!-- Preview image figure-->
+                {% if post.head_image %}
                 <figure class="mb-4"><img class="img-fluid rounded"
-                                          src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..."/></figure>
+                                          src="{{ post.head_image.url }}" alt="{{ post.title }} head_image"/></figure>
+                {% else %}
+                <figure class="mb-4"><img class="img-fluid rounded"
+                                          src="https://picsum.photos/seed/{{ post.pk }}/800/200/" alt="random_image"/>
+                </figure>
+                {% endif %}
                 <!-- Post content-->
                 <section class="mb-5">
                     <P>{{ post.content }}</P>
+                    {% if post.file_upload %}
+                    <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button">
+                        Download:
+                        {% if post.get_file_ext == "csv" %}
+                            <i class="fa-solid fa-file-csv"></i>
+                        {% elif post.get_file_ext == "xlsx" or post.get_file_ext == "xls" %}
+                            <i class="fa-solid fa-file-excel"></i>
+                        {% elif post.get_file_ext == "docx" or post.get_file_ext == "doc" %}
+                            <i class="fa-solid fa-file-word"></i>
+                        {% else %}
+                            <i class="fa-solid fa-file"></i>
+                        {% endif %}
+                        {{ post.get_file_name }}
+                    </a>
+                    {% endif %}
                 </section>
             </article>
             <!-- Comments section-->
