@@ -30,7 +30,7 @@
     </figure>
     {% endif %}
     <!-- Post content-->
-    <P>{{ post.content }}</P>
+    <P>{{ post.get_content_markdown | safe }}</P>
 
     {% if post.tags.exists %}
     <i class="fas fa-tags"></i>

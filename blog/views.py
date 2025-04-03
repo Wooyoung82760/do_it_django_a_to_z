@@ -107,6 +107,8 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
                 self.object.tags.add(tag)
         return response
 
+
+
 class PostDetail(DetailView):
     model = Post
 
